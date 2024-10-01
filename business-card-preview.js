@@ -13,8 +13,6 @@ function generateCardPreviewUrl(name, logoUrl) {
   let logoOption = "";
 
   if (logoUrl) {
-    // Convert the logo URL to base64
-
     const base64logoUrl = base64UrlEncode(logoUrl);
     console.log("base64logoUrl: ", base64logoUrl);
     const base64logo =
