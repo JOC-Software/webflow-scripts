@@ -1,5 +1,38 @@
+// CONSTANTS
+
+const CLOUDINARY_BASE_URL =
+  "https://res.cloudinary.com/do1dsm5uy/image/upload/";
+
+const FONT = "Roboto";
+const FONT_SIZE = "64";
+
+const CARD_VARIANT_PARAMS = {
+  49960146305355: {
+    name: "Cherry",
+    path: "cherry.png",
+    color: "5C2809DD",
+  },
+  49960146338123: {
+    name: "Maple",
+    path: "maple.png",
+    color: "785021BB",
+  },
+  49912178540875: {
+    name: "Gold",
+    path: "pvc.png",
+    color: "FDEF76",
+  },
+  49912178573643: {
+    name: "Silver",
+    path: "pvc.png",
+    color: "CECECE",
+  },
+};
+
+// END CONSTANTS
+
 // UTILS
-export function base64UrlEncode(str) {
+function base64UrlEncode(str) {
   // Convert string to Base64
   let base64 = btoa(str);
 
@@ -14,14 +47,19 @@ export function base64UrlEncode(str) {
 
 // END UTILS
 
-function generateCardPreviewUrl(name, logoUrl) {
-  const prefix = "https://res.cloudinary.com/do1dsm5uy/image/upload/";
-  const suffix = "cherry.png";
+function generateBusinessCardPreviewUrl(name, logoUrl) {
+  // Get the variant from the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const variant = urlParams.get("variant");
+
+  // Get the right params from card_variant_params
+  const variantParams = CARD_VARIANT_PARAMS[variant] || {};
+  console.log("variantParams: ", variantParams);
 
   let textOption = "";
 
   if (name) {
-    textOption = `l_text:Tinos_50_semibold:${name},co_rgb:5C2809DD,g_south_east,x_50,y_50/`;
+    textOption = `l_text:${FONT}_${FONT_SIZE}:${name},co_rgb:${variantParams.color},g_south_east,x_89,y_71/`;
   }
 
   let logoOption = "";
@@ -29,9 +67,10 @@ function generateCardPreviewUrl(name, logoUrl) {
   if (logoUrl) {
     const base64logoUrl = base64UrlEncode(logoUrl);
     console.log("base64logoUrl: ", base64logoUrl);
-    logoOption = `l_fetch:${base64logoUrl},g_center,w_600,e_blackwhite,co_rgb:5C2809DD,e_colorize/`;
+    logoOption = `l_fetch:${base64logoUrl},g_center,h_400,w_600,c_limit,e_blackwhite,co_rgb:${variantParams.color},e_colorize/`;
   }
-  return `${prefix}${textOption}${logoOption}${suffix}`;
+
+  return `${CLOUDINARY_BASE_URL}${textOption}${logoOption}${variantParams.path}`;
 }
 
 // Wait for the DOM to fully load
@@ -55,7 +94,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Create cloudinary preview
     const logoUrl = document.getElementById("logo-display")?.src;
-    const imagePreview = generateCardPreviewUrl(encodedCustomName, logoUrl);
+    const imagePreview = generateBusinessCardPreviewUrl(
+      encodedCustomName,
+      logoUrl
+    );
 
     // Set the src of the image, replacing 'TextOnCard' with the encoded custom name
     img.src = imagePreview;
