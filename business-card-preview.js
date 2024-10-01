@@ -1,3 +1,5 @@
+import { base64UrlEncode } from "./utils/encoding";
+
 function generateCardPreviewUrl(name, logoUrl) {
   const prefix = "https://res.cloudinary.com/do1dsm5uy/image/upload/";
   const suffix = "cherry.png";
@@ -12,16 +14,6 @@ function generateCardPreviewUrl(name, logoUrl) {
 
   if (logoUrl) {
     // Convert the logo URL to base64
-    function base64UrlEncode(str) {
-      // Convert string to Base64
-      let base64 = btoa(str);
-
-      // Replace Base64 characters to make it URL safe
-      return base64
-        .replace(/\+/g, "-") // Replace + with -
-        .replace(/\//g, "_") // Replace / with _
-        .replace(/=+$/, ""); // Remove any = padding
-    }
 
     const base64logoUrl = base64UrlEncode(logoUrl);
     console.log("base64logoUrl: ", base64logoUrl);
