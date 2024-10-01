@@ -1,4 +1,18 @@
-import { base64UrlEncode } from "./utils/encoding";
+// UTILS
+export function base64UrlEncode(str) {
+  // Convert string to Base64
+  let base64 = btoa(str);
+
+  // Replace Base64 characters to make it URL safe
+  const base64UrlEncoded = base64
+    .replace(/\+/g, "-") // Replace + with -
+    .replace(/\//g, "_") // Replace / with _
+    .replace(/=+$/, ""); // Remove any = padding
+
+  return base64UrlEncoded;
+}
+
+// END UTILS
 
 function generateCardPreviewUrl(name, logoUrl) {
   const prefix = "https://res.cloudinary.com/do1dsm5uy/image/upload/";
@@ -15,8 +29,7 @@ function generateCardPreviewUrl(name, logoUrl) {
   if (logoUrl) {
     const base64logoUrl = base64UrlEncode(logoUrl);
     console.log("base64logoUrl: ", base64logoUrl);
-    const base64logo =
-      (logoOption = `l_fetch:${base64logoUrl},g_center,w_600,e_blackwhite,co_rgb:5C2809DD,e_colorize/`);
+    logoOption = `l_fetch:${base64logoUrl},g_center,w_600,e_blackwhite,co_rgb:5C2809DD,e_colorize/`;
   }
   return `${prefix}${textOption}${logoOption}${suffix}`;
 }
@@ -42,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Create cloudinary preview
     const logoUrl = document.getElementById("logo-display")?.src;
-    console.log(logoUrl);
     const imagePreview = generateCardPreviewUrl(encodedCustomName, logoUrl);
 
     // Set the src of the image, replacing 'TextOnCard' with the encoded custom name
