@@ -5,27 +5,57 @@ const CLOUDINARY_BASE_URL =
 
 const FONT = "Roboto";
 const FONT_SIZE = "64";
+const LOGO_SIZE = "h_400,w_600,c_limit";
 
 const CARD_VARIANT_PARAMS = {
   49960146305355: {
-    name: "Cherry",
+    name: "Cherry Engraved",
     path: "cherry.png",
-    color: "5C2809DD",
+    logoParam: "e_blackwhite,co_rgb:5C2809DD,e_colorize",
+    textColor: "5C2809DD",
   },
   49960146338123: {
-    name: "Maple",
+    name: "Maple Engraved",
     path: "maple.png",
-    color: "785021BB",
+    logoParam: "e_blackwhite,co_rgb:785021BB,e_colorize",
+    textColor: "785021BB",
   },
   49912178540875: {
-    name: "Gold",
+    name: "Gold Engraved",
     path: "pvc.png",
-    color: "FDEF76",
+    logoParam: "e_blackwhite,co_rgb:785021BB,e_colorize",
+    textColor: "FDEF76",
   },
   49912178573643: {
-    name: "Silver",
+    name: "Silver Engraved",
     path: "pvc.png",
-    color: "CECECE",
+    logoParam: "e_blackwhite,co_rgb:CECECE,e_colorize",
+    textColor: "CECECE",
+  },
+  PVC_PRINT: {
+    name: "PVC Print",
+    path: "pvc.png",
+    textColor: "FFF",
+  },
+  CHERRY_PRINT: {
+    name: "Cherry Print",
+    path: "pvc.png",
+    textColor: "000",
+  },
+  MAPLE_PRINT: {
+    name: "Maple Print",
+    path: "pvc.png",
+    textColor: "000",
+  },
+  SILVER_PRINT: {
+    name: "Silver Print",
+    path: "pvc.png",
+    textColor: "000",
+  },
+  GOLD_PRINT: {
+    name: "Gold Print",
+    path: "pvc.png",
+    textColor: "000",
   },
 };
 
@@ -54,20 +84,20 @@ function generateBusinessCardPreviewUrl(name, logoUrl) {
 
   // Get the right params from card_variant_params
   const variantParams = CARD_VARIANT_PARAMS[variant] || {};
-  console.log("variantParams: ", variantParams);
 
   let textOption = "";
 
   if (name) {
-    textOption = `l_text:${FONT}_${FONT_SIZE}:${name},co_rgb:${variantParams.color},g_south_east,x_89,y_71/`;
+    textOption = `l_text:${FONT}_${FONT_SIZE}:${name},co_rgb:${variantParams.textColor},g_south_east,x_89,y_71/`;
   }
 
   let logoOption = "";
 
   if (logoUrl) {
     const base64logoUrl = base64UrlEncode(logoUrl);
-    console.log("base64logoUrl: ", base64logoUrl);
-    logoOption = `l_fetch:${base64logoUrl},g_center,h_400,w_600,c_limit,e_blackwhite,co_rgb:${variantParams.color},e_colorize/`;
+    logoOption = `l_fetch:${base64logoUrl},g_center,${LOGO_SIZE}${
+      variantParams.logoParam ? "," + variantParams.logoParam : ""
+    }/`;
   }
 
   return `${CLOUDINARY_BASE_URL}${textOption}${logoOption}${variantParams.path}`;
