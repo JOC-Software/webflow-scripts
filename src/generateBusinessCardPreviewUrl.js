@@ -50,12 +50,12 @@ const CARD_VARIANT_PARAMS = {
   SILVER_PRINT: {
     name: "Silver Print",
     path: "pvc.png",
-    textColor: "000",
+    textColor: "FFF",
   },
   GOLD_PRINT: {
     name: "Gold Print",
     path: "pvc.png",
-    textColor: "000",
+    textColor: "FFF",
   },
 };
 
