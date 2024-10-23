@@ -10,52 +10,51 @@ const LOGO_SIZE = "h_400,w_600,c_limit";
 const CARD_VARIANT_PARAMS = {
   49960146305355: {
     name: "Cherry Engraved",
-    path: "cherry.png",
-    logoParam: "e_blackwhite,co_rgb:5C2809DD,e_colorize",
+    path: "cherry-engraved.png",
     textColor: "5C2809DD",
+    type: "engraved",
   },
   49960146338123: {
     name: "Maple Engraved",
-    path: "maple.png",
-    logoParam: "e_blackwhite,co_rgb:785021BB,e_colorize",
+    path: "maple-engraved.png",
     textColor: "785021BB",
+    type: "engraved",
   },
   49912178540875: {
     name: "Gold Engraved",
-    path: "pvc.png",
-    logoParam: "e_blackwhite,co_rgb:785021BB,e_colorize",
+    path: "gold-engraved.png",
     textColor: "FDEF76",
+    type: "engraved",
   },
   49912178573643: {
     name: "Silver Engraved",
-    path: "pvc.png",
-    logoParam: "e_blackwhite,co_rgb:CECECE,e_colorize",
+    path: "silver-engraved.png",
     textColor: "CECECE",
+    type: "engraved",
   },
-  PVC_PRINT: {
+  PVC_BLACK_PRINT: {
     name: "PVC Print",
     path: "pvc.png",
     textColor: "FFF",
+    type: "print",
+  },
+  PVC_WHITE_PRINT: {
+    name: "PVC Print",
+    path: "pvc-white.png",
+    textColor: "000",
+    type: "print",
   },
   CHERRY_PRINT: {
     name: "Cherry Print",
     path: "pvc.png",
     textColor: "000",
+    type: "print",
   },
   MAPLE_PRINT: {
     name: "Maple Print",
     path: "pvc.png",
     textColor: "000",
-  },
-  SILVER_PRINT: {
-    name: "Silver Print",
-    path: "pvc.png",
-    textColor: "FFF",
-  },
-  GOLD_PRINT: {
-    name: "Gold Print",
-    path: "pvc.png",
-    textColor: "FFF",
+    type: "print",
   },
 };
 
@@ -92,15 +91,17 @@ function generateBusinessCardPreviewUrl(name, logoUrl) {
   }
 
   let logoOption = "";
+  let path = variantParams.path;
 
   if (logoUrl) {
     const base64logoUrl = base64UrlEncode(logoUrl);
-    logoOption = `l_fetch:${base64logoUrl},g_center,${LOGO_SIZE}${
-      variantParams.logoParam ? "," + variantParams.logoParam : ""
-    }/`;
+    logoOption = `l_fetch:${base64logoUrl},g_center,${LOGO_SIZE}/`;
+  } else {
+    // do not show the engraved part if there is no logo
+    path = path.split("-")[0];
   }
 
-  return `${CLOUDINARY_BASE_URL}${textOption}${logoOption}${variantParams.path}`;
+  return `${CLOUDINARY_BASE_URL}${textOption}${logoOption}${path}`;
 }
 
 // Wait for the DOM to fully load
