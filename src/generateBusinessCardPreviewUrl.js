@@ -32,13 +32,13 @@ const CARD_VARIANT_PARAMS = {
     textColor: "CECECE",
     type: "engraved",
   },
-  PVC_BLACK_PRINT: {
+  50670509785419: {
     name: "PVC Print",
     path: "pvc.png",
     textColor: "FFF",
     type: "print",
   },
-  PVC_WHITE_PRINT: {
+  50670509818187: {
     name: "PVC Print",
     path: "pvc-white.png",
     textColor: "000",
