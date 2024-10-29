@@ -86,10 +86,13 @@ function generateBusinessCardPreviewUrl(name, logoUrl) {
   let logoOption = "";
   let path = variantParams.path;
 
-  if (logoUrl !== LOGO_URL_PLACEHOLDER) {
+  if (variantParams.type === "print" && logoUrl !== LOGO_URL_PLACEHOLDER) {
     const base64logoUrl = base64UrlEncode(logoUrl);
     logoOption = `l_fetch:${base64logoUrl},g_center,${LOGO_SIZE}/`;
-  } else {
+  } else if (
+    variantParams.type === "engraved" &&
+    logoUrl === LOGO_URL_PLACEHOLDER
+  ) {
     path = path.split("-")[0];
   }
 
