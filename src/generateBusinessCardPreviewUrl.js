@@ -74,8 +74,12 @@ function base64UrlEncode(str) {
 // END UTILS
 
 function generateBusinessCardPreviewUrl(name, logoUrl) {
-  const urlParams = new URLSearchParams(window.location.search);
-  const variant = urlParams.get("variant");
+  const variant = document
+    .querySelector("[sf-add-to-cart]")
+    .getAttribute("sf-add-to-cart")
+    .split("/")
+    .pop();
+
   const variantParams = CARD_VARIANT_PARAMS[variant] || {};
 
   let textOption = "";
